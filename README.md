@@ -229,19 +229,49 @@ python s_6_train_controller_cmaes.py \
 	--generations 200 \
 	--population-size 32 \
 	--eval-episodes 4 \
-	--max-steps 1000
-```
+	--max-steps 1000s
+```s
 
 Useful options:
 
 - `--sigma`: initial CMA-ES sampling scale
-- `--log-every-candidates`: how often to print candidate evaluation progress
-- `--log-episode-rewards`: print per-episode rewards inside selected candidate evaluations
+- `--workers`: number of parallel candidate evaluations
+- `--resume-cma`: resume the CMA-ES optimizer state from a previous `.cma.pkl` file
 - `--render-best`: render the final best controller after optimization
 
 Expected output:
 
 - `models/controller_cmaes.npz`
+- `models/controller_cmaes.cma.pkl`
+
+You can stop and continue the controller search later.
+
+First run:
+
+```bash
+python s_6_train_controller_cmaes.py \
+	--generations 300 \s
+	--population-size 32 \
+	--eval-episodes 4 \
+	--max-steps 1000 \
+	--sigma 0.1 \
+	--workers 16
+```
+
+Continue later from the saved CMA-ES state:
+
+```bash
+python s_6_train_controller_cmaes.py \
+	--generations 1500 \
+	--resume-cma models/controller_cmaes.cma.pkl \
+	--workers 16
+```
+
+When resuming:
+
+- `--resume-cma` restores the CMA-ES internal optimizer state
+- `models/controller_cmaes.npz` is still used to recover the best controller found so far
+- `--generations` means additional generations to run from the resumed state
 
 ### 7. Run the Trained World-Model Agent
 
