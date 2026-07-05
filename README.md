@@ -38,9 +38,17 @@ pip install -e .
 pip install torch numpy matplotlib pillow tqdm cma "gymnasium[box2d]"
 ```
 
+If you want to recreate the exact environment captured in this subproject, you can also install from the local requirements file:
+
+```bash
+pip install -r carracing_wm_Schmidhuber/requirements.txt
+```
+
 Notes:
 
 - `pip install -e .` installs the local `gymnasium_env` package defined in `pyproject.toml`.
+- `carracing_wm_Schmidhuber/requirements.txt` is a local environment snapshot, not a minimal portable requirements file.
+- That requirements file currently includes absolute editable paths and machine-specific packages, so it may need manual cleanup on another machine.
 - `torch` installation may need a CUDA-specific command depending on your system. If so, install PyTorch first from the official instructions and then run the remaining packages.
 - All major training scripts default to `--device auto`, which uses CUDA when available.
 
