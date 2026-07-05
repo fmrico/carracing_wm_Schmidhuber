@@ -6,3 +6,8 @@ data/*/**
 # Python cache
 __pycache__/
 *.py[cod]
+
+# Keep the models folder, but ignore generated model artifacts.
+models/**
+!models/
+!models/.gitkeep
